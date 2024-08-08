@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Counter</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s ease;
+        }
+
+        .counter {
+            font-size: 25em;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            transition: background-color 0.5s ease;
+        }
+
+        .digit {
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .counter {
+                font-size: 8em;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .counter {
+                font-size: 5em;
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="counter" id="time">
+        <span id="hour" class="digit"></span>:<span id="minute" class="digit"></span>:<span id="second" class="digit"></span>
+    </div>
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0').split('');
+            const minutes = String(now.getMinutes()).padStart(2, '0').split('');
+            const seconds = String(now.getSeconds()).padStart(2, '0').split('');
+            
+            document.getElementById('hour').innerHTML = hours.map(digit => `<span style="color: ${getRandomColor()}">${digit}</span>`).join('');
+            document.getElementById('minute').innerHTML = minutes.map(digit => `<span style="color: ${getRandomColor()}">${digit}</span>`).join('');
+            document.getElementById('second').innerHTML = seconds.map(digit => `<span style="color: ${getRandomColor()}">${digit}</span>`).join('');
+            
+            document.getElementById('time').style.backgroundColor = getRandomColor();
+            
+            document.body.style.backgroundColor = getRandomColor();
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
